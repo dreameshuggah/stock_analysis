@@ -163,6 +163,23 @@ if ticker_symbol:
         #    ticker_symbol = st.text_input("Ticker", value=ticker_symbol).upper()
         #with col_input_2:
         #    period = st.selectbox("Timeline", options=["1y", "2y", "5y", "max"], index=1)
+
+
+        
+        st.markdown("### Price Performance")
+        p1, p2, p3, p4, p5 = st.columns(5)
+        with p1:
+            metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
+        with p2:
+            metric_card("Day High", f"${info.get('dayHigh', 'N/A')}")
+        with p3:
+            metric_card("52W Low", f"${info.get('fiftyTwoWeekLow', 'N/A')}")
+        with p4:
+            metric_card("52W High", f"${info.get('fiftyTwoWeekHigh', 'N/A')}")
+        with p5:
+            metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
+
+        
         
         st.markdown("### Key Metrics")
         
@@ -196,22 +213,6 @@ if ticker_symbol:
         
     
         
-        st.markdown("### Price Performance")
-        p1, p2, p3, p4, p5 = st.columns(5)
-        with p1:
-            metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
-        with p2:
-            metric_card("Day High", f"${info.get('dayHigh', 'N/A')}")
-        with p3:
-            metric_card("52W Low", f"${info.get('fiftyTwoWeekLow', 'N/A')}")
-        with p4:
-            metric_card("52W High", f"${info.get('fiftyTwoWeekHigh', 'N/A')}")
-        with p5:
-            metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
-
-        # 1. Technical Indicators (EMAs)
-        for span in [10, 20, 50, 150, 200]:
-            hist[f'EMA{span}'] = hist['Close'].ewm(span=span, adjust=False).mean()
 
 
         st.markdown('#')
@@ -223,7 +224,10 @@ if ticker_symbol:
             low=hist['Low'], close=hist['Close'], name="Market Data",
             increasing_line_color='#00FF41', decreasing_line_color='#FF3131'
         ))
-        
+        # 1. Technical Indicators (EMAs)
+        for span in [10, 20, 50, 150, 200]:
+            hist[f'EMA{span}'] = hist['Close'].ewm(span=span, adjust=False).mean()
+            
         # EMAs
         colors = {10: '#00D1FF', 20: '#FFA500', 50: '#FF0000', 150: '#A020F0', 200: '#FFFFFF'}
         for span in [10, 20, 50, 150, 200]:
