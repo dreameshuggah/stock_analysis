@@ -216,7 +216,7 @@ if ticker_symbol:
 
 
         #st.markdown('#')
-        st.markdown(f"### Technical Analysis ({ticker_symbol})")
+        st.markdown(f"### Technical Analysis: {ticker_symbol}")
         fig_price = go.Figure()
         # Candlestick
         fig_price.add_trace(go.Candlestick(
@@ -261,7 +261,7 @@ if ticker_symbol:
 
 
         #st.markdown('#')
-        st.markdown(f"### Fundamental Performance ({ticker_symbol})")
+        st.markdown(f"### Fundamental Performance: {ticker_symbol}")
         # Fetch Financial Statements
         q_financials = ticker.quarterly_financials
         q_cashflow = ticker.quarterly_cashflow
