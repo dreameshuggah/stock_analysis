@@ -216,7 +216,7 @@ if ticker_symbol:
 
 
         #st.markdown('#')
-        st.markdown("### Technical Analysis")
+        st.markdown(f"### Technical Analysis ({ticker_symbol})")
         fig_price = go.Figure()
         # Candlestick
         fig_price.add_trace(go.Candlestick(
