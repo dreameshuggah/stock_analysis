@@ -167,7 +167,10 @@ if ticker_symbol:
 
         
         st.markdown("### Price Performance")
-        p1, p2, p3, p4, p5 = st.columns(5)
+        potential_upside_perc = round(info.get('targetMeanPrice', 'N/A') - current_price / current_price)*100,2)
+        
+        
+        p1, p2, p3, p4, p5, p6 = st.columns(6)
         with p1:
             metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
         with p2:
@@ -178,6 +181,12 @@ if ticker_symbol:
             metric_card("52W High", f"${info.get('fiftyTwoWeekHigh', 'N/A')}")
         with p5:
             metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
+        with p6:
+            if potential_upside_perc > 0:
+                metric_card("Upside %", f"{potential_upside_perc}%")
+            else:
+                metric_card("Upside %", f"N/A")
+                
 
         
         
