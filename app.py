@@ -167,7 +167,7 @@ if ticker_symbol:
 
         
         st.markdown("### Price Performance")
-        potential_upside_perc = round(info.get('targetMeanPrice', 'N/A') - current_price / current_price)*100,2)
+        potential_upside_perc = (info.get('targetMeanPrice', 'N/A') - current_price )/ current_price)*100
         
         
         p1, p2, p3, p4, p5, p6 = st.columns(6)
@@ -183,7 +183,7 @@ if ticker_symbol:
             metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
         with p6:
             if potential_upside_perc > 0:
-                metric_card("Upside %", f"{potential_upside_perc}%")
+                metric_card("Upside %", f"{round(potential_upside_perc,1)}%")
             else:
                 metric_card("Upside %", f"N/A")
                 
