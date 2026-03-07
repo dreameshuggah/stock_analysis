@@ -180,7 +180,7 @@ if ticker_symbol:
         #with p3:
             #metric_card("52W Low", f"${info.get('fiftyTwoWeekLow', 'N/A')}")
         with p2:
-            metric_card("52W High", f"${info.get('fiftyTwoWeekHigh', 'N/A')}")
+            metric_card("52W Range", f"${info.get('fiftyTwoWeekRange', 'N/A')}")
         with p3:
             metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
         with p4:
