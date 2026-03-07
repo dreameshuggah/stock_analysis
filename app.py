@@ -171,18 +171,19 @@ if ticker_symbol:
         potential_chg_perc = (potential_chg/current_price)*100
         
         
-        p1, p2, p3, p4, p5 = st.columns(5)
+        p1, p2, p3, p4 = st.columns(4)
         with p1:
-            metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
-        with p2:
-            metric_card("Day High", f"${info.get('dayHigh', 'N/A')}")
+            #metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
+            metric_card("Day Range",f"${info.get('regularMarketDayRange','N/A')}")
+        #with p2:
+            #metric_card("Day High", f"${info.get('dayHigh', 'N/A')}")
         #with p3:
             #metric_card("52W Low", f"${info.get('fiftyTwoWeekLow', 'N/A')}")
-        with p3:
+        with p2:
             metric_card("52W High", f"${info.get('fiftyTwoWeekHigh', 'N/A')}")
-        with p4:
+        with p3:
             metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
-        with p5:
+        with p4:
             if potential_chg_perc > 0:
                 metric_card("Upside %", f"{round(potential_chg_perc,1)}%")
             else:
