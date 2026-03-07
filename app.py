@@ -271,7 +271,7 @@ if ticker_symbol:
 
 
         #st.markdown('#')
-        st.markdown(f"### Fundamental Performance: {ticker_symbol} {info.get("financialCurrency","N/A")}")
+        st.markdown(f"### Fundamental Performance: {ticker_symbol} ({info.get("financialCurrency","N/A")})")
         # Fetch Financial Statements
         q_financials = ticker.quarterly_financials
         q_cashflow = ticker.quarterly_cashflow
