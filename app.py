@@ -84,7 +84,7 @@ st.markdown("""
     header {visibility: hidden;}
     
     .main-title {
-        font-size: 6rem;
+        font-size: 3rem;
         background: linear-gradient(135deg, #FFFFFF 0%, #00D1FF 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -114,10 +114,10 @@ def metric_card(label, value, delta=None, delta_color="normal"):
     </div>
     """, unsafe_allow_html=True)
 
-#st.title(":green[Financial Intelligence Dashboard]")
+st.title(":blue[Financial Intelligence Dashboard]")
 #st.title("Financial Intelligence Dashboard")
 #st.markdown("###")
-st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
+#st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
 #st.markdown('<p class="sub-title">Premium Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
 
 # Sidebar - User Input
