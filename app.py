@@ -84,7 +84,7 @@ st.markdown("""
     header {visibility: hidden;}
     
     .main-title {
-        font-size: 3rem;
+        font-size: 6rem;
         background: linear-gradient(135deg, #FFFFFF 0%, #00D1FF 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
