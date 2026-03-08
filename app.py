@@ -150,6 +150,25 @@ if ticker_symbol:
             change_pct = (change / prev_close) * 100 if prev_close else 0
             color = "#00FF41" if change >= 0 else "#FF3131"
             arrow = "▲" if change >= 0 else "▼"
+
+            pre_market_price = info.get('preMarketPrice')
+            post_market_price = info.get('postMarketPrice')
+            
+            market_extras = ""
+            if pre_market_price is not None:
+                pre_change = pre_market_price - current_price
+                pre_change_pct = (pre_change / current_price) * 100 if current_price else 0
+                pre_color = "#00FF41" if pre_change >= 0 else "#FF3131"
+                pre_arrow = "▲" if pre_change >= 0 else "▼"
+                market_extras += f'<div style="font-size: 0.9rem; color: #A0A0A0; margin-top: 5px;">Pre-Market: ${pre_market_price:,.2f} <span style="color: {pre_color};">{pre_arrow} {abs(pre_change):.2f} ({pre_change_pct:+.2f}%)</span></div>'
+            
+            if post_market_price is not None:
+                post_change = post_market_price - current_price
+                post_change_pct = (post_change / current_price) * 100 if current_price else 0
+                post_color = "#00FF41" if post_change >= 0 else "#FF3131"
+                post_arrow = "▲" if post_change >= 0 else "▼"
+                market_extras += f'<div style="font-size: 0.9rem; color: #A0A0A0; margin-top: 5px;">Post-Market: ${post_market_price:,.2f} <span style="color: {post_color};">{post_arrow} {abs(post_change):.2f} ({post_change_pct:+.2f}%)</span></div>'
+            
             
             st.markdown(f"""
                 <div style="font-size: 2.5rem; font-weight: 700; color: #FFFFFF;">${current_price:,.2f}</div>
