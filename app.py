@@ -31,7 +31,8 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
 
-    h1, h2, h3 {
+    #h1, h2, 
+    h3 {
         color: #d4af37 !important;
         font-weight: 400 !important;
         letter-spacing: 1px;
