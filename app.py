@@ -84,18 +84,22 @@ st.markdown("""
     header {visibility: hidden;}
     
     .main-title {
+        font-family: 'Playfair Display', serif;
         font-size: 3rem;
-        background: linear-gradient(135deg, #F9F1CC 0%, #d4af37 100%);
+        font-weight: 600;
+        background: linear-gradient(45deg, #d4af37, #f3e5ab, #d4af37);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0px;
+        margin-bottom: 0.5rem;
+        text-shadow: 0px 4px 20px rgba(212, 175, 55, 0.2);
     }
     
     .sub-title {
-        color: var(--text-dim);
-        font-size: 1.1rem;
+        color: #94A3B8; 
+        font-size: 1.1rem; 
+        margin-bottom: 2rem;
         font-weight: 300;
-        margin-bottom: 30px;
+        letter-spacing: 0.5px;
     }
 </style>
 """, unsafe_allow_html=True)
