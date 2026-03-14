@@ -50,8 +50,8 @@ st.markdown("""
 
     .metric-card:hover {
         transform: translateY(-5px);
-        border-color: var(--accent-color);
-        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(212, 175, 55, 0.5);
+        box-shadow: 0 12px 40px 0 rgba(212, 175, 55, 0.15);
     }
 
     .metric-label {
