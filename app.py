@@ -31,9 +31,12 @@ st.markdown("""
     }
 
     h1, h2, h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 700 !important;
-        letter-spacing: -0.5px;
+        color: #d4af37 !important;
+        font-weight: 400 !important;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 1.1rem !important;
+        margin-top: 2rem !important;
     }
 
     /* Glassmorphism Card Style */
