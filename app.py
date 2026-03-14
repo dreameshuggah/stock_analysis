@@ -123,7 +123,7 @@ def metric_card(label, value, delta=None, delta_color="normal"):
 #st.title("Financial Intelligence Dashboard")
 #st.markdown("###")
 st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">Premium Financial Analysis & Insights</p>', unsafe_allow_html=True)
+#st.markdown('<p class="sub-title">Premium Financial Analysis & Insights</p>', unsafe_allow_html=True)
 
 # Sidebar - User Input
 col1, col2 = st.columns(2)
