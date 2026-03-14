@@ -114,8 +114,8 @@ def metric_card(label, value, delta=None, delta_color="normal"):
     </div>
     """, unsafe_allow_html=True)
 
-st.title(":grey[Financial Intelligence Dashboard]")
-#st.title("Financial Intelligence Dashboard")
+#st.title(":grey[Financial Intelligence Dashboard]")
+st.title("Financial Intelligence Dashboard")
 #st.markdown("###")
 #st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
 #st.markdown('<p class="sub-title">Premium Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
