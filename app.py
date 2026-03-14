@@ -78,7 +78,7 @@ st.markdown("""
 
     .metric-value {
         color: #FFFFFF;
-        font-size: 1rem ; #1.5rem;
+        font-size: 2rem ; #1.5rem;
         font-weight: 600;
         font-family: 'Inter', sans-serif;
     }
