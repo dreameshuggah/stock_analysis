@@ -260,7 +260,8 @@ if ticker_symbol:
             hist[f'EMA{span}'] = hist['Close'].ewm(span=span, adjust=False).mean()
             
         # EMAs
-        colors = {10: '#d4af37', 20: '#C0C0C0', 50: '#CD7F32', 150: '#FFFFFF', 200: '#8A9A5B'}
+        colors = {10: '#00D1FF', 20: '#FFA500', 50: '#FF0000', 150: '#A020F0', 200: '#FFFFFF'}
+        #colors = {10: '#d4af37', 20: '#C0C0C0', 50: '#CD7F32', 150: '#FFFFFF', 200: '#8A9A5B'}
         for span in [10, 20, 50, 150, 200]:
             fig_price.add_trace(go.Scatter(
                 x=hist.index, y=hist[f'EMA{span}'],
@@ -316,7 +317,8 @@ if ticker_symbol:
 
         if not fundamentals_df.empty:
             fig_fin = go.Figure()
-            fin_colors = ['#d4af37', '#C0C0C0', '#CD7F32', '#B8860B']
+            fin_colors = ['#00D1FF', '#00FF41', '#FFA500', '#FF3131']
+            #fin_colors = ['#d4af37', '#C0C0C0', '#CD7F32', '#B8860B']
             for i, col in enumerate(fundamentals_df.columns):
                 fig_fin.add_trace(go.Bar(
                     x=fundamentals_df.index, 
