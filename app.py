@@ -106,6 +106,26 @@ st.markdown("""
         font-weight: 300;
         letter-spacing: 0.5px;
     }
+
+    /* Top Title Style */
+    .lux-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 600;
+        background: linear-gradient(45deg, #d4af37, #f3e5ab, #d4af37);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+        text-shadow: 0px 4px 20px rgba(212, 175, 55, 0.2);
+    }
+    
+    .lux-subtitle {
+        color: #94A3B8; 
+        font-size: 1.1rem; 
+        margin-bottom: 2rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -124,9 +144,9 @@ def metric_card(label, value, delta=None, delta_color="normal"):
     """, unsafe_allow_html=True)
 
 #st.title(":grey[Financial Intelligence Dashboard]")
-st.markdown("### Financial Intelligence Dashboard")
+#st.markdown("### Financial Intelligence Dashboard")
 #st.markdown("###")
-#st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
+st.markdown('<div class='lux-title'>Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
 #st.markdown('<p class="sub-title">Premium Financial Analysis & Insights</p>', unsafe_allow_html=True)
 
 # Sidebar - User Input
