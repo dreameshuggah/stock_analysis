@@ -25,7 +25,8 @@ st.markdown("""
     }
 
     .stApp {
-        background-color: var(--bg-color);
+        #background-color: var(--bg-color);
+        background: radial-gradient(circle at top left, #141c2f 0%, #0b0f19 50%, #05080e 100%);
         color: var(--text-main);
         font-family: 'Inter', sans-serif;
     }
