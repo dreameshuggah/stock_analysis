@@ -16,10 +16,10 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@700&display=swap');
     
     :root {
-        --bg-color: #0E1117;
-        --card-bg: rgba(255, 255, 255, 0.03);
-        --accent-color: #00D1FF;
-        --text-main: #E0E0E0;
+        --bg-color: #0B0F19;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --accent-color: #d4af37;
+        --text-main: #E2E8F0;
         --text-dim: #A0A0A0;
     }
 
@@ -85,7 +85,7 @@ st.markdown("""
     
     .main-title {
         font-size: 3rem;
-        background: linear-gradient(135deg, #FFFFFF 0%, #00D1FF 100%);
+        background: linear-gradient(135deg, #F9F1CC 0%, #d4af37 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0px;
@@ -115,10 +115,10 @@ def metric_card(label, value, delta=None, delta_color="normal"):
     """, unsafe_allow_html=True)
 
 #st.title(":grey[Financial Intelligence Dashboard]")
-st.title("Financial Intelligence Dashboard")
+#st.title("Financial Intelligence Dashboard")
 #st.markdown("###")
-#st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
-#st.markdown('<p class="sub-title">Premium Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
+st.markdown('<p class="main-title">Financial Intelligence Dashboard</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">Premium Financial Analysis & Insights</p>', unsafe_allow_html=True)
 
 # Sidebar - User Input
 col1, col2 = st.columns(2)
@@ -260,7 +260,7 @@ if ticker_symbol:
             hist[f'EMA{span}'] = hist['Close'].ewm(span=span, adjust=False).mean()
             
         # EMAs
-        colors = {10: '#00D1FF', 20: '#FFA500', 50: '#FF0000', 150: '#A020F0', 200: '#FFFFFF'}
+        colors = {10: '#d4af37', 20: '#C0C0C0', 50: '#CD7F32', 150: '#FFFFFF', 200: '#8A9A5B'}
         for span in [10, 20, 50, 150, 200]:
             fig_price.add_trace(go.Scatter(
                 x=hist.index, y=hist[f'EMA{span}'],
@@ -316,7 +316,7 @@ if ticker_symbol:
 
         if not fundamentals_df.empty:
             fig_fin = go.Figure()
-            fin_colors = ['#00D1FF', '#00FF41', '#FFA500', '#FF3131']
+            fin_colors = ['#d4af37', '#C0C0C0', '#CD7F32', '#B8860B']
             for i, col in enumerate(fundamentals_df.columns):
                 fig_fin.add_trace(go.Bar(
                     x=fundamentals_df.index, 
@@ -354,3 +354,4 @@ if ticker_symbol:
     except Exception as e:
         st.error(f"Error fetching data for {ticker_symbol}: {e}")
         st.info("Ensure the ticker is correct (e.g., AAPL, TSLA, MSFT).")
+
