@@ -52,14 +52,23 @@ st.markdown("""
 
     /* Glassmorphism Card Style */
     .metric-card {
-        background: var(--card-bg);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 20px;
+        #background: var(--card-bg);
+        #border: 1px solid rgba(255, 255, 255, 0.05);
+        #border-radius: 12px;
+        #padding: 20px;
+        #backdrop-filter: blur(10px);
+        #transition: transform 0.3s ease, border-color 0.3s ease;
+        #text-align: left;
+        #margin-bottom: 20px;
+        
+        background: rgba(20, 28, 47, 0.6);
+        border: 1px solid rgba(212, 175, 55, 0.15);
         backdrop-filter: blur(10px);
-        transition: transform 0.3s ease, border-color 0.3s ease;
-        text-align: left;
-        margin-bottom: 20px;
+        -webkit-backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
     }
 
     .metric-card:hover {
