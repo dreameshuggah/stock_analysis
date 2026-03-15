@@ -289,7 +289,7 @@ if ticker_symbol:
         with m4:
             metric_card("Trailing P/E", f"{info.get('trailingPE', 'N/A')}")
         
-        
+        st.markdown("###")
         r1,r2,r3,r4 = st.columns(4)
         with r1:
             metric_card("Return On Equity",f"{info.get('returnOnEquity','N/A')}")
