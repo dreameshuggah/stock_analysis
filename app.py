@@ -288,8 +288,8 @@ if ticker_symbol:
             metric_card("Trailing P/E", f"{trailingPE}")
         
         st.markdown("#####")
-        returnOnEquity = info.get('returnOnEquity','N/A')
-        ebitdaMargins = info.get('ebitdaMargins','N/A')
+        returnOnEquity = info.get('returnOnEquity')
+        ebitdaMargins = info.get('ebitdaMargins')
         r1,r2,r3,r4 = st.columns(4)
         with r1:
             metric_card("Return On Equity",f"{returnOnEquity*100:.2f}%")
