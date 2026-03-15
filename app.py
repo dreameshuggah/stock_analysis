@@ -277,6 +277,8 @@ if ticker_symbol:
 
         forwardPE = info.get('forwardPE', 'N/A')
         trailingPE = info.get('trailingPE', 'N/A')
+        
+        
         m1, m2, m3, m4 = st.columns(4)
         with m1:
             metric_card("Debt / Mkt Cap", f"{debt_to_mcap*100:.2f}%")
@@ -286,15 +288,15 @@ if ticker_symbol:
             metric_card("Forward P/E", f"{forwardPE:.2f}")
         with m4:
             metric_card("Trailing P/E", f"{trailingPE}")
+
+
         
-        st.markdown("#####")
+        st.markdown("######")
         returnOnEquity = info.get('returnOnEquity')
         returnOnEquity = round(returnOnEquity*100,2) if isinstance(returnOnEquity, float) else 'N/A'
 
         ebitdaMargins = info.get('ebitdaMargins')
         ebitdaMargins = round(ebitdaMargins*100,2) if isinstance(ebitdaMargins, float) else 'N/A'
-
-        #ebitdaMargins = info.get('ebitdaMargins')
         r1,r2,r3,r4 = st.columns(4)
         with r1:
             metric_card("Return On Equity",f"{returnOnEquity}%")
