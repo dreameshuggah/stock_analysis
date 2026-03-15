@@ -241,12 +241,7 @@ if ticker_symbol:
         
         p1, p2, p3, p4 = st.columns(4)
         with p1:
-            #metric_card("Day Low", f"${info.get('dayLow', 'N/A')}")
             metric_card("Day Range",f"${info.get('regularMarketDayRange','N/A')}")
-        #with p2:
-            #metric_card("Day High", f"${info.get('dayHigh', 'N/A')}")
-        #with p3:
-            #metric_card("52W Low", f"${info.get('fiftyTwoWeekLow', 'N/A')}")
         with p2:
             metric_card("52W Range", f"${info.get('fiftyTwoWeekRange', 'N/A')}")
         with p3:
@@ -279,15 +274,18 @@ if ticker_symbol:
         qtr_total_revenue = qtr_financials_transposed['Total Revenue'].iloc[0] if 'Total Revenue' in qtr_financials_transposed.columns else 1
         qtr_interest_income_ratio = (qtr_interest_income / qtr_total_revenue) if qtr_total_revenue else 0
 
+
+        forwardPE = info.get('forwardPE', 'N/A')
+        trailingPE = info.get('trailingPE', 'N/A')
         m1, m2, m3, m4 = st.columns(4)
         with m1:
             metric_card("Debt / Mkt Cap", f"{debt_to_mcap*100:.2f}%")
         with m2:
             metric_card("Int. Inc / Rev", f"{qtr_interest_income_ratio*100:.2f}%")
         with m3:
-            metric_card("Forward P/E", f"{info.get('forwardPE', 'N/A')}")
+            metric_card("Forward P/E", f"{forwardPE:.2f}")
         with m4:
-            metric_card("Trailing P/E", f"{info.get('trailingPE', 'N/A')}")
+            metric_card("Trailing P/E", f"{trailingPE:.2f}")
         
         st.markdown("#####")
         returnOnEquity = info.get('returnOnEquity','N/A')
