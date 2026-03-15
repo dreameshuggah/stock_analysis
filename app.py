@@ -290,8 +290,15 @@ if ticker_symbol:
             metric_card("Trailing P/E", f"{info.get('trailingPE', 'N/A')}")
         
         
-    
-        
+        r1,r2,r3,r4 = st.columns(4)
+        with r1:
+            metric_card("Return On Equity",f"{info.get('returnOnEquity','N/A')}")
+        with r2:
+            metric_card("Ebitda Margins",f"{info.get('ebitdaMargins','N/A')}")
+        with r3:
+            metric_card("Quick Ratio",f"{info.get('quickRatio','N/A')}")
+        with r4:
+            metric_card("Beta",f"{info.get('beta','N/A')}")
 
 
         #st.markdown('#')
