@@ -292,7 +292,7 @@ if ticker_symbol:
         #ebitdaMargins = info.get('ebitdaMargins')
         r1,r2,r3,r4 = st.columns(4)
         with r1:
-            metric_card("Return On Equity",f"{info.get('returnOnEquity','N/A')}%")
+            metric_card("Return On Equity",f"{info.get('returnOnEquity','N/A')}")
         with r2:
             metric_card("Ebitda Margins",f"{info.get('ebitdaMargins','N/A')}")
         with r3:
