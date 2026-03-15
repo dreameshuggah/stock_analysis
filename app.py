@@ -291,7 +291,7 @@ if ticker_symbol:
 
 
         
-        st.markdown("#######")
+        st.markdown("######")
         returnOnEquity = info.get('returnOnEquity')
         returnOnEquity = round(returnOnEquity*100,2) if isinstance(returnOnEquity, float) else 'N/A'
 
