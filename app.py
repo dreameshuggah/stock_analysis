@@ -291,12 +291,15 @@ if ticker_symbol:
         returnOnEquity = info.get('returnOnEquity')
         returnOnEquity = round(returnOnEquity*100,2) if isinstance(returnOnEquity, float) else 'N/A'
 
+        ebitdaMargins = info.get('ebitdaMargins')
+        ebitdaMargins = round(ebitdaMargins*100,2) if isinstance(ebitdaMargins, float) else 'N/A'
+
         #ebitdaMargins = info.get('ebitdaMargins')
         r1,r2,r3,r4 = st.columns(4)
         with r1:
             metric_card("Return On Equity",f"{returnOnEquity}%")
         with r2:
-            metric_card("Ebitda Margins",f"{info.get('ebitdaMargins','N/A')}")
+            metric_card("Ebitda Margins",f"{ebitdaMargins}%")
         with r3:
             metric_card("Quick Ratio",f"{info.get('quickRatio','N/A')}")
         with r4:
