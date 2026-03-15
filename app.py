@@ -285,7 +285,7 @@ if ticker_symbol:
         with m3:
             metric_card("Forward P/E", f"{forwardPE:.2f}")
         with m4:
-            metric_card("Trailing P/E", f"{trailingPE:.2f}")
+            metric_card("Trailing P/E", f"{trailingPE}")
         
         st.markdown("#####")
         returnOnEquity = info.get('returnOnEquity','N/A')
