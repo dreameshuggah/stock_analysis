@@ -294,9 +294,9 @@ if ticker_symbol:
         ebitdaMargins = info.get('ebitdaMargins','N/A')
         r1,r2,r3,r4 = st.columns(4)
         with r1:
-            metric_card("Return On Equity",f"{returnOnEquity:.2f}")
+            metric_card("Return On Equity",f"{returnOnEquity*100:.2f}%")
         with r2:
-            metric_card("Ebitda Margins",f"{ebitdaMargins:.2f}")
+            metric_card("Ebitda Margins",f"{ebitdaMargins*100:.2f}%")
         with r3:
             metric_card("Quick Ratio",f"{info.get('quickRatio','N/A')}")
         with r4:
