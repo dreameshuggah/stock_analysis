@@ -46,7 +46,7 @@ st.markdown("""
         font-weight: 400 !important;
         letter-spacing: 1px;
         text-transform: uppercase;
-        font-size: 1.1rem !important;
+        font-size: 1.3rem !important;
         margin-top: 2rem !important;
     }
 
