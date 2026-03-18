@@ -33,21 +33,8 @@ The app leverages the `yfinance` API to fetch data directly from Yahoo Finance, 
     - NumPy (Numerical calculations)
 ---- 
 
-## 4. INSTALLATION (LOCAL SETUP)
-If you wish to run the dashboard locally, follow these steps:
 
-1. Clone the repository:
-   $ git clone [repository-url]
-   $ cd stock-financial-analysis-dashboard
-
-2. Install dependencies:
-   $ pip install -r requirements.txt
-
-3. Launch the app:
-   $ streamlit run app.py
----- 
-
-## 5. HOW TO USE
+## 4. HOW TO USE
 1. Enter a Stock Ticker.
 2. Date Range: Select price period 1y,2y,5y,max for the historical data 
    you wish to analyze.
@@ -57,7 +44,7 @@ If you wish to run the dashboard locally, follow these steps:
    toggle indicators on/off.
 ---- 
 
-## 6. LIMITATIONS & DISCLAIMER
+## 5. LIMITATIONS & DISCLAIMER
 * Data Lag: While data is "real-time," there may be a slight delay 
   (10-15 minutes) depending on the exchange and API limitations.
 * Non-Financial Advice: This tool is for educational and informational 
@@ -65,7 +52,7 @@ If you wish to run the dashboard locally, follow these steps:
   consult with a professional before making investment decisions.
 ---- 
 
-## 7. ACKNOWLEDGMENTS
+## 6. ACKNOWLEDGMENTS
 * Data provided by Yahoo Finance via the yfinance library.
 * Dashboard UI powered by the Streamlit framework.
 ---- 
