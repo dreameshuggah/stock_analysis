@@ -1,13 +1,12 @@
             
-
-   STOCK FINANCIAL ANALYSIS DASHBOARD - README
+# STOCK FINANCIAL ANALYSIS DASHBOARD - README
 
 Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
 
 
 
 
-1. OVERVIEW
+### 1. OVERVIEW
 -----------
 The Stock Financial Analysis Dashboard is an interactive web application 
 built with Streamlit and Python. It provides investors and analysts with 
@@ -18,7 +17,7 @@ on publicly traded companies.
 The app leverages the 'yfinance' API to fetch data directly from Yahoo 
 Finance, ensuring up-to-date market information.
 
-2. KEY FEATURES
+## 2. KEY FEATURES
 ---------------
 * Real-time Data Retrieval: Enter any valid ticker symbol (e.g., AAPL, 
   TSLA, MSFT) to pull instant market data.
@@ -33,7 +32,7 @@ Finance, ensuring up-to-date market information.
 * Export Functionality: Option to download historical data as CSV files 
   for offline analysis.
 
-3. TECH STACK
+## 3. TECH STACK
 -------------
 * Language: Python 3.x
 * Framework: Streamlit
@@ -43,7 +42,7 @@ Finance, ensuring up-to-date market information.
     - Plotly / Matplotlib (Visualization)
     - NumPy (Numerical calculations)
 
-4. INSTALLATION (LOCAL SETUP)
+## 4. INSTALLATION (LOCAL SETUP)
 -----------------------------
 If you wish to run the dashboard locally, follow these steps:
 
@@ -57,7 +56,7 @@ If you wish to run the dashboard locally, follow these steps:
 3. Launch the app:
    $ streamlit run app.py
 
-5. HOW TO USE
+## 5. HOW TO USE
 -------------
 1. Enter a Stock Ticker.
 2. Date Range: Select price period 1y,2y,5y,max for the historical data 
@@ -67,7 +66,7 @@ If you wish to run the dashboard locally, follow these steps:
 4. Interactions: Hover over charts to see specific price points or 
    toggle indicators on/off.
 
-6. LIMITATIONS & DISCLAIMER
+## 6. LIMITATIONS & DISCLAIMER
 ---------------------------
 * Data Lag: While data is "real-time," there may be a slight delay 
   (10-15 minutes) depending on the exchange and API limitations.
@@ -75,7 +74,7 @@ If you wish to run the dashboard locally, follow these steps:
   purposes only. It does not constitute financial advice. Always 
   consult with a professional before making investment decisions.
 
-7. ACKNOWLEDGMENTS
+## 7. ACKNOWLEDGMENTS
 ------------------
 * Data provided by Yahoo Finance via the yfinance library.
 * Dashboard UI powered by the Streamlit framework.
