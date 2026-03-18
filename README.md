@@ -22,8 +22,8 @@ The app leverages the `yfinance` API to fetch data directly from Yahoo Finance, 
   Moving Averages (SMA/EMA), RSI, and Bollinger Bands.
 * Financial Statements: Easy access to Balance Sheets, Income 
   Statements, and Cash Flow summaries.
-* Key Metrics: Quick view of P/E Ratio, Market Cap, 52-Week High/Low, 
-  and Dividend Yield.
+* Key Metrics: Quick view of P/E Ratio, Total Debt/Market Cap Ratio, ROE, EBITDA margins 
+  and Quick Ratio
 * Export Functionality: Option to download historical data as CSV files 
   for offline analysis.
 ---- 
