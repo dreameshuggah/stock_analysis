@@ -283,7 +283,7 @@ if ticker_symbol:
         with m1:
             metric_card("Total Debt / Mkt Cap", f"{debt_to_mcap*100:.2f}%")
         with m2:
-            metric_card("Interest Income / Rev", f"{qtr_interest_income_ratio*100:.2f}%")
+            metric_card("Interest Income / Revenue", f"{qtr_interest_income_ratio*100:.2f}%")
         with m3:
             metric_card("Forward P/E", f"{forwardPE:.2f}")
         with m4:
