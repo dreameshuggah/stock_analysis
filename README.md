@@ -2,9 +2,9 @@ Individual Stock Analysis:
 
 https://stock-financial-analysis-dashboard.streamlit.app/
 
-========================================================================
+
              STOCK FINANCIAL ANALYSIS DASHBOARD - README
-========================================================================
+
 
 1. OVERVIEW
 -----------
