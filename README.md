@@ -79,6 +79,6 @@ If you wish to run the dashboard locally, follow these steps:
 * Data provided by Yahoo Finance via the yfinance library.
 * Dashboard UI powered by the Streamlit framework.
 
-========================================================================
+
 Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
-========================================================================
+
