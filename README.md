@@ -12,7 +12,6 @@ built with Streamlit and Python. It provides investors and analysts with
 a centralized platform to retrieve real-time stock data, visualize 
 historical price trends, and perform fundamental and technical analysis 
 on publicly traded companies.
-
 The app leverages the 'yfinance' API to fetch data directly from Yahoo 
 Finance, ensuring up-to-date market information.
 ---- 
