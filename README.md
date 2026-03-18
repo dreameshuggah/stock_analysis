@@ -59,8 +59,8 @@ If you wish to run the dashboard locally, follow these steps:
 
 5. HOW TO USE
 -------------
-1. Sidebar: Use the sidebar on the left to enter a Stock Ticker.
-2. Date Range: Select the start and end dates for the historical data 
+1. Enter a Stock Ticker.
+2. Date Range: Select price period 1y,2y,5y,max for the historical data 
    you wish to analyze.
 3. Analysis include: Current price, Price Performance, Key Metrics
    Technical Analysis & Fundamental Performance.
