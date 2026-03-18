@@ -1,6 +1,6 @@
              STOCK FINANCIAL ANALYSIS DASHBOARD - README
-             Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
-
+             
+Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
 
 1. OVERVIEW
 -----------
