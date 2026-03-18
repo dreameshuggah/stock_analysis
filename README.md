@@ -7,14 +7,10 @@ Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
 
 
 ## 1. OVERVIEW
-The **Stock Financial Analysis Dashboard** is an interactive web application 
-built with Streamlit and Python. It provides investors and analysts with 
-a centralized platform to retrieve real-time stock data, visualize 
-historical price trends, and perform fundamental and technical analysis 
-on publicly traded companies.
+The **Stock Financial Analysis Dashboard** is an interactive web application built with Streamlit and Python. It provides investors and analysts with a centralized platform to retrieve real-time stock data, visualize historical price trends, and perform fundamental and technical analysis on publicly traded companies.
 
-The app leverages the 'yfinance' API to fetch data directly from Yahoo 
-Finance, ensuring up-to-date market information.
+The app leverages the `yfinance` API to fetch data directly from Yahoo Finance, ensuring up-to-date market information.
+
 ---- 
 
 ## 2. KEY FEATURES
