@@ -1,9 +1,5 @@
-Individual Stock Analysis:
-
-https://stock-financial-analysis-dashboard.streamlit.app/
-
-
              STOCK FINANCIAL ANALYSIS DASHBOARD - README
+             Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
 
 
 1. OVERVIEW
@@ -80,5 +76,5 @@ If you wish to run the dashboard locally, follow these steps:
 * Dashboard UI powered by the Streamlit framework.
 
 
-Project Link: https://stock-financial-analysis-dashboard.streamlit.app/
+
 
