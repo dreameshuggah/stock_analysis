@@ -281,9 +281,9 @@ if ticker_symbol:
         
         m1, m2, m3, m4 = st.columns(4)
         with m1:
-            metric_card("Debt / Mkt Cap", f"{debt_to_mcap*100:.2f}%")
+            metric_card("Total Debt / Mkt Cap", f"{debt_to_mcap*100:.2f}%")
         with m2:
-            metric_card("Int. Inc / Rev", f"{qtr_interest_income_ratio*100:.2f}%")
+            metric_card("Interest Income / Rev", f"{qtr_interest_income_ratio*100:.2f}%")
         with m3:
             metric_card("Forward P/E", f"{forwardPE:.2f}")
         with m4:
