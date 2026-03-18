@@ -79,7 +79,7 @@ st.markdown("""
 
     .metric-label {
         color: var(--text-dim);
-        font-size: 0.8rem;
+        font-size: 1rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-bottom: 8px;
