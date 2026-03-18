@@ -18,8 +18,7 @@ The app leverages the `yfinance` API to fetch data directly from Yahoo Finance, 
   TSLA, MSFT) to pull instant market data.
 * Interactive Charts: High-quality visualizations of price movements 
   using Plotly, including Candlestick and Line charts.
-* Technical Indicators: Built-in support for common indicators such as 
-  Moving Averages (SMA/EMA), RSI, and Bollinger Bands.
+* Technical Indicators: 10, 20, 50, 150, 200 Exponential Moving Averages (EMA)
 * Financial Statements: Easy access to Balance Sheets, Income 
   Statements, and Cash Flow summaries.
 * Key Metrics: Quick view of P/E Ratio, Total Debt/Market Cap Ratio, ROE, EBITDA margins 
