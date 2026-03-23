@@ -25,13 +25,13 @@ st.markdown("""
     }
 
     .stApp {
-        background-color: var(--dark-bg);
-        color: #d1d5db;
-        font-family: 'Inter', sans-serif;
-        scroll-behavior: smooth;
-        #background: radial-gradient(circle at top left, #141c2f 0%, #0b0f19 50%, #05080e 100%);
-        #color: var(--text-main);
+        #background-color: var(--dark-bg);
+        #color: #d1d5db;
         #font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+        background: radial-gradient(circle at top left, #141c2f 0%, #0b0f19 50%, #05080e 100%);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
         
     }
 
