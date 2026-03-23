@@ -25,10 +25,12 @@ st.markdown("""
     }
 
     .stApp {
-        #background-color: var(--bg-color);
-        background: radial-gradient(circle at top left, #141c2f 0%, #0b0f19 50%, #05080e 100%);
+        #background: radial-gradient(circle at top left, #141c2f 0%, #0b0f19 50%, #05080e 100%);
         color: var(--text-main);
         font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     #h1, h2, 
