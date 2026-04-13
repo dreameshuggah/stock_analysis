@@ -216,7 +216,8 @@ if ticker_symbol:
         debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
 
         # ---- TABS INTERFACE ----
-        tab1, tab2 = st.tabs(["Overview & Fundamentals", "Advanced Analytics"])
+        #tab1, tab2 = st.tabs(["Overview & Fundamentals", "Advanced Analytics"])
+        tab1, tab2, tab3 = st.tabs(["Overview & Fundamentals", "Market Sentiment & Signals", "Quantitative Research"])
 
         # ==========================================
         # TAB 1: STANDARD DASHBOARD
@@ -337,6 +338,52 @@ if ticker_symbol:
         # TAB 2: ADVANCED ANALYTICS
         # ==========================================
         with tab2:
+            st.markdown("<br>", unsafe_allow_html=True)
+            s1, s2 = st.columns([1, 2])
+            
+            with s1:
+                st.markdown("### Signal Engine")
+                # RSI Calculation
+                delta = hist['Close'].diff()
+                gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+                loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+                rs = gain / loss
+                rsi = 100 - (100 / (1 + rs)).iloc[-1]
+                
+                # Bollinger Bands
+                ma20 = hist['Close'].rolling(window=20).mean()
+                std20 = hist['Close'].rolling(window=20).std()
+                upper_bb = ma20 + (std20 * 2)
+                lower_bb = ma20 - (std20 * 2)
+                
+                curr_bb_upper = upper_bb.iloc[-1]
+                curr_bb_lower = lower_bb.iloc[-1]
+
+                signal = "NEUTRAL"
+                sig_color = "var(--text-muted)"
+                if rsi < 35 and current_price <= curr_bb_lower:
+                    signal = "BULLISH ENTRY"
+                    sig_color = "var(--positive)"
+                elif rsi > 65 and current_price >= curr_bb_upper:
+                    signal = "BEARISH EXIT"
+                    sig_color = "var(--negative)"
+
+                metric_card("Momentum (RSI)", f"{rsi:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                st.markdown("### Major Holders")
+                inst = ticker.institutional_holders
+                if inst is not None and not inst.empty:
+                    st.dataframe(inst[['Holder', 'Shares', '% Out']], hide_index=True)
+                else: st.info("Institutional data unavailable.")
+
+            with s2:
+                st.markdown("### Insider Transactions")
+                insiders = ticker.insider_transactions
+                if insiders is not None and not insiders.empty:
+                    st.dataframe(insiders[['Date', 'Insider', 'Transaction', 'Shares']].head(10), hide_index=True)
+                else: st.info("No recent insider transactions reported.")
+                    
             st.markdown("<br>", unsafe_allow_html=True)
             
             # 1. OUTLIER DETECTION (Isolation Forest)
