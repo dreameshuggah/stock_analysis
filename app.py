@@ -245,7 +245,7 @@ if ticker_symbol:
         debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
 
         # ---- TABS INTERFACE ----
-        tab1, tab2, tab3 = st.tabs(["Overview & Fundamentals", "Advanced Analytics","Quantitative Research"])
+        tab1, tab2 = st.tabs(["Overview & Fundamentals", "Advanced Analytics"])
 
         # ==========================================
         # TAB 1: STANDARD DASHBOARD
@@ -466,23 +466,7 @@ if ticker_symbol:
                     st.plotly_chart(fig_rs, use_container_width=True)
             except Exception as e:
                 st.warning("Could not load benchmark data for relative strength comparison.")
-        # ==========================================
-        # TAB 3: QUANTITATIVE RESEARCH
-        # ==========================================
-        with tab3:
-            st.markdown("<br>", unsafe_allow_html=True)
-            
-            # Correlation Matrix
-            st.markdown("### Macro Asset Correlation (1Y)")
-            try:
-                corr_assets = [ticker_symbol, "SPY", "GLD", "USO", "^TNX"]
-                corr_data = yf.download(corr_assets, period="1y")['Close'].pct_change().corr()
-                fig_corr = px.imshow(corr_data, text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
-                fig_corr.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color="#94A3B8"))
-                st.plotly_chart(fig_corr, use_container_width=True)
-            except: st.warning("Correlation data currently unavailable.")
-
-            st.markdown("---")
+        
 
     except Exception as e:
         st.error(f"System Error: {e}")
