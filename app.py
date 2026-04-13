@@ -122,6 +122,35 @@ def metric_card(label, value, delta=None, delta_color="normal"):
     </div>
     """, unsafe_allow_html=True)
 
+
+def rsi(hist):
+    # RSI Calculation
+    delta = hist['Close'].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+    rs = gain / loss
+    rsi = 100 - (100 / (1 + rs)).iloc[-1]
+            
+    # Bollinger Bands
+    ma20 = hist['Close'].rolling(window=20).mean()
+    std20 = hist['Close'].rolling(window=20).std()
+    upper_bb = ma20 + (std20 * 2)
+    lower_bb = ma20 - (std20 * 2)
+    
+    curr_bb_upper = upper_bb.iloc[-1]
+    curr_bb_lower = lower_bb.iloc[-1]
+
+    signal = "NEUTRAL"
+    sig_color = "var(--text-muted)"
+    if rsi < 35 and current_price <= curr_bb_lower:
+        signal = "BULLISH ENTRY"
+        sig_color = "var(--positive)"
+    elif rsi > 65 and current_price >= curr_bb_upper:
+        signal = "BEARISH EXIT"
+        sig_color = "var(--negative)"
+
+    return rsi, signal, sig_color
+
 st.markdown("### Financial Intelligence Dashboard")
 
 # Sidebar - User Input
@@ -334,30 +363,7 @@ if ticker_symbol:
 
             st.markdown("### Signal Engine")
             # RSI Calculation
-            delta = hist['Close'].diff()
-            gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
-            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-            rs = gain / loss
-            rsi = 100 - (100 / (1 + rs)).iloc[-1]
-            
-            # Bollinger Bands
-            ma20 = hist['Close'].rolling(window=20).mean()
-            std20 = hist['Close'].rolling(window=20).std()
-            upper_bb = ma20 + (std20 * 2)
-            lower_bb = ma20 - (std20 * 2)
-            
-            curr_bb_upper = upper_bb.iloc[-1]
-            curr_bb_lower = lower_bb.iloc[-1]
-
-            signal = "NEUTRAL"
-            sig_color = "var(--text-muted)"
-            if rsi < 35 and current_price <= curr_bb_lower:
-                signal = "BULLISH ENTRY"
-                sig_color = "var(--positive)"
-            elif rsi > 65 and current_price >= curr_bb_upper:
-                signal = "BEARISH EXIT"
-                sig_color = "var(--negative)"
-
+            rsi, signal, sig_color = rsi(hist)
             metric_card("Momentum (RSI)", f"{rsi:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
             st.markdown("<br>", unsafe_allow_html=True)
 
