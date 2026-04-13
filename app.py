@@ -180,8 +180,9 @@ if ticker_symbol:
             
             
             st.markdown(f"""
-                <div style="font-size: 2.5rem; font-weight: 300; color: #FFFFFF; letter-spacing: -1px;">${current_price:,.2f}</div>
-                <div style="font-size: 1.1rem; font-weight: 500; color: {color};">{arrow} {abs(change):.2f} ({change_pct:+.2f}%)</div>
+                <div style="font-size: 2.5rem; font-weight: 700; color: #FFFFFF;">${current_price:,.2f}</div>
+                <div style="font-size: 1.1rem; color: {color};">{arrow} {abs(change):.2f} ({change_pct:+.2f}%)</div>
+                {market_extras}
             """, unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
 
