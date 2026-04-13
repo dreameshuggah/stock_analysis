@@ -3,7 +3,6 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 from sklearn.ensemble import IsolationForest
 from scipy.stats import norm
 
@@ -39,6 +38,7 @@ st.markdown("""
         letter-spacing: 0.5px;
     }
 
+    /* Premium Glassmorphism Cards */
     .metric-card {
         background: var(--card-bg);
         border: 1px solid var(--border-color);
@@ -53,6 +53,7 @@ st.markdown("""
     .metric-card:hover {
         transform: translateY(-3px);
         border-color: rgba(212, 175, 55, 0.5);
+        box-shadow: 0 10px 30px -5px rgba(212, 175, 55, 0.15);
     }
 
     .metric-label {
@@ -77,203 +78,345 @@ st.markdown("""
         font-weight: 500;
     }
 
-    #MainMenu, footer, header {visibility: hidden;}
+    /* Clean up Streamlit UI */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
     
-    .stTabs [data-baseweb="tab-list"] { gap: 2rem; background-color: transparent; }
+    /* Style Streamlit Tabs to match Luxury Theme */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2rem;
+        background-color: transparent;
+    }
     .stTabs [data-baseweb="tab"] {
         height: 50px;
+        white-space: pre-wrap;
         background-color: transparent;
+        border-radius: 4px 4px 0px 0px;
+        gap: 1px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         font-family: 'Playfair Display', serif;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: var(--text-muted);
     }
     .stTabs [aria-selected="true"] {
         color: var(--accent-gold) !important;
         border-bottom-color: var(--accent-gold) !important;
     }
-
-    /* Table Styling for Insiders */
-    .styled-table { border-collapse: collapse; width: 100%; color: var(--text-main); font-size: 0.9rem; }
-    .styled-table th { color: var(--accent-gold); text-align: left; padding: 12px; border-bottom: 1px solid var(--border-color); }
-    .styled-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 </style>
 """, unsafe_allow_html=True)
 
 def metric_card(label, value, delta=None, delta_color="normal"):
-    color = "var(--text-muted)"
-    if delta_color == "normal": color = "var(--positive)"
-    elif delta_color == "inverse": color = "var(--negative)"
-    elif delta_color == "warning": color = "var(--accent-gold)"
+    delta_html = ""
+    if delta:
+        color = "var(--positive)" if delta_color == "normal" else "var(--negative)"
+        if delta_color == "warning": color = "var(--accent-gold)"
+        delta_html = f'<div class="metric-delta" style="color: {color}">{delta}</div>'
     
-    delta_html = f'<div class="metric-delta" style="color: {color}">{delta}</div>' if delta else ""
-    st.markdown(f'<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value">{value}</div>{delta_html}</div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">{label}</div>
+        <div class="metric-value">{value}</div>
+        {delta_html}
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("### Financial Intelligence Dashboard")
 
+# Sidebar - User Input
 col1, col2 = st.columns(2)
 with col1:
     ticker_symbol = st.text_input("Enter Stock Ticker", value="NVDA").upper()
 with col2:
-    period = st.selectbox("Price Period", options=["1y", "2y", "5y", "max"], index=0)
+    period = st.selectbox("Price Period", options=["1y", "2y", "5y", "max"], index=1)
 
 if ticker_symbol:
     try:
+        # Fetch Data
         ticker = yf.Ticker(ticker_symbol)
         hist = ticker.history(period=period)
         info = ticker.info
 
         st.markdown("---")
         
-        # Data Preparation
+        # Additional Data for Ratios and Charts
         qtr_financials = ticker.quarterly_financials
         qtr_cashflow = ticker.quarterly_cashflow
-        qtr_financials_t = qtr_financials.transpose()
+        qtr_financials_transposed = qtr_financials.transpose()
         
         # Header Section
-        col_h1, col_h2 = st.columns([2, 1])
-        with col_h1:
+        col_header_1, col_header_2 = st.columns([2, 1])
+        with col_header_1:
             st.title(f"{info.get('shortName', ticker_symbol)}")
             st.caption(f"{info.get('sector', 'N/A')} | {info.get('industry', 'N/A')} | {info.get('exchange', 'N/A')}")
         
-        with col_h2:
+        with col_header_2:
             st.markdown("<div style='text-align: right;'>", unsafe_allow_html=True)
             current_price = info.get('currentPrice', hist['Close'].iloc[-1] if not hist.empty else 0)
             prev_close = info.get('previousClose', current_price)
             change = current_price - prev_close
             change_pct = (change / prev_close) * 100 if prev_close else 0
+            
             color = "#10B981" if change >= 0 else "#EF4444"
-            st.markdown(f'<div style="font-size: 2.5rem; font-weight: 300; color: #FFFFFF;">${current_price:,.2f}</div><div style="font-size: 1.1rem; color: {color};">{"▲" if change >= 0 else "▼"} {abs(change):.2f} ({change_pct:+.2f}%)</div>', unsafe_allow_html=True)
+            arrow = "▲" if change >= 0 else "▼"
+            
+            st.markdown(f"""
+                <div style="font-size: 2.5rem; font-weight: 300; color: #FFFFFF; letter-spacing: -1px;">${current_price:,.2f}</div>
+                <div style="font-size: 1.1rem; font-weight: 500; color: {color};">{arrow} {abs(change):.2f} ({change_pct:+.2f}%)</div>
+            """, unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
 
-        # Tab Interface
-        tab1, tab2, tab3 = st.tabs(["Overview & Fundamentals", "Market Sentiment & Signals", "Quantitative Research"])
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Calculations for Additional Metrics
+        # 1. Interest Income Ratio
+        if 'Interest Income' in qtr_financials_transposed.columns:
+            qtr_interest_income = qtr_financials_transposed['Interest Income'].iloc[0]
+        elif 'Net Interest Income' in qtr_financials_transposed.columns:
+            qtr_interest_income = qtr_financials_transposed['Net Interest Income'].iloc[0]
+        else:
+            qtr_interest_income = 0
+
+        qtr_total_revenue = qtr_financials_transposed['Total Revenue'].iloc[0] if 'Total Revenue' in qtr_financials_transposed.columns else 1
+        interest_income_ratio = (qtr_interest_income / qtr_total_revenue) * 100 if qtr_total_revenue else 0
+
+        # 2. Efficiency Ratios
+        roe = info.get('returnOnEquity')
+        roe_val = f"{roe*100:.2f}%" if roe is not None else "N/A"
+        
+        ebitda_margin = info.get('ebitdaMargins')
+        ebitda_margin_val = f"{ebitda_margin*100:.2f}%" if ebitda_margin is not None else "N/A"
+
+        # 3. Liquidity
+        quick_ratio = info.get('quickRatio', 'N/A')
+        
+        # 4. Debt & Market
+        market_cap = info.get('marketCap', 1)
+        total_debt = info.get('totalDebt', 0)
+        debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
+
+        # ---- TABS INTERFACE ----
+        tab1, tab2 = st.tabs(["Overview & Fundamentals", "Advanced Analytics"])
 
         # ==========================================
-        # TAB 1: OVERVIEW & FUNDAMENTALS
+        # TAB 1: STANDARD DASHBOARD
         # ==========================================
         with tab1:
-            # Piotroski F-Score Calculation (Simplified)
-            f_score = 0
-            try:
-                if not qtr_financials.empty:
-                    net_inc = qtr_financials.loc['Net Income'].iloc[0]
-                    prev_net_inc = qtr_financials.loc['Net Income'].iloc[1]
-                    roa = net_inc / info.get('totalAssets', 1)
-                    cfo = qtr_cashflow.loc['Operating Cash Flow'].iloc[0] if 'Operating Cash Flow' in qtr_cashflow.index else 0
-                    
-                    if net_inc > 0: f_score += 1
-                    if roa > 0: f_score += 1
-                    if cfo > 0: f_score += 1
-                    if cfo > net_inc: f_score += 1
-                    if net_inc > prev_net_inc: f_score += 1
-            except: pass
-
-            st.markdown("<br>", unsafe_allow_html=True)
+            # Row 1: Price Performance
+            potential_chg = info.get('targetMeanPrice', 0) - current_price if info.get('targetMeanPrice') else 0
+            potential_chg_perc = (potential_chg / current_price) * 100 if current_price else 0
+            
             p1, p2, p3, p4 = st.columns(4)
-            with p1: metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
-            with p2: metric_card("F-Score (Health)", f"{f_score}/9", "Piotroski Quality Rank", "warning")
-            with p3: metric_card("Return on Equity", f"{info.get('returnOnEquity', 0)*100:.2f}%")
-            with p4: metric_card("Debt / Mkt Cap", f"{(info.get('totalDebt', 0)/info.get('marketCap', 1))*100:.2f}%")
+            with p1: metric_card("Day Range", f"${info.get('regularMarketDayRange', 'N/A')}")
+            with p2: metric_card("52W Range", f"${info.get('fiftyTwoWeekRange', 'N/A')}")
+            with p3: metric_card("Avg Target", f"${info.get('targetMeanPrice', 'N/A')}")
+            with p4: metric_card("Upside", f"{round(potential_chg_perc, 1)}%" if potential_chg_perc else "N/A", delta_color="normal" if potential_chg_perc > 0 else "inverse")
 
             st.markdown("<br>", unsafe_allow_html=True)
+            
+            # Row 2: Valuation & Debt
+            m1, m2, m3, m4 = st.columns(4)
+            with m1: metric_card("Debt / Mkt Cap", f"{debt_to_mcap:.2f}%")
+            with m2: metric_card("Int. Income / Rev", f"{interest_income_ratio:.2f}%")
+            with m3: metric_card("Forward P/E", f"{info.get('forwardPE', 'N/A')}")
+            with m4: metric_card("Trailing P/E", f"{info.get('trailingPE', 'N/A')}")
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            # Row 3: Efficiency & Health
+            r1, r2, r3, r4 = st.columns(4)
+            with r1: metric_card("Return on Equity", roe_val)
+            with r2: metric_card("EBITDA Margin", ebitda_margin_val)
+            with r3: metric_card("Quick Ratio", f"{quick_ratio}")
+            with r4: metric_card("Beta", f"{info.get('beta', 'N/A')}")
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(f"### Technical Analysis")
+            
             fig_price = go.Figure()
-            fig_price.add_trace(go.Candlestick(x=hist.index, open=hist['Open'], high=hist['High'], low=hist['Low'], close=hist['Close'], name="Price", increasing_line_color='#10B981', decreasing_line_color='#EF4444'))
-            fig_price.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', xaxis_rangeslider_visible=False, height=500, font=dict(family="Inter", color="#94A3B8"))
+            
+            # Candlestick
+            fig_price.add_trace(go.Candlestick(
+                x=hist.index, open=hist['Open'], high=hist['High'],
+                low=hist['Low'], close=hist['Close'], name="Price action",
+                increasing_line_color='#10B981', decreasing_line_color='#EF4444'
+            ))
+            
+            # EMAs
+            colors = {10: '#E2E8F0', 20: '#D4AF37', 50: '#94A3B8', 150: '#475569', 200: '#334155'}
+            for span in [10, 20, 50, 150, 200]:
+                hist[f'EMA{span}'] = hist['Close'].ewm(span=span, adjust=False).mean()
+                fig_price.add_trace(go.Scatter(
+                    x=hist.index, y=hist[f'EMA{span}'],
+                    line=dict(width=1.5, color=colors[span]), 
+                    name=f'EMA {span}', opacity=0.85
+                ))
+
+            fig_price.update_layout(
+                plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', xaxis_rangeslider_visible=False, 
+                height=600, margin=dict(l=0, r=0, t=10, b=0),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                font=dict(family="Inter", color="#94A3B8"), hovermode="x unified"
+            )
+            fig_price.update_xaxes(showgrid=False, zeroline=False)
+            fig_price.update_yaxes(showgrid=True, gridcolor='rgba(255,255,255,0.05)', zeroline=False)
             st.plotly_chart(fig_price, use_container_width=True)
 
+            # --- Fundamental Performance Section ---
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown(f"### Fundamental Performance ({info.get('financialCurrency', 'N/A')})")
+            
+            # Extract specific rows for historical fundamentals
+            revenue = qtr_financials.loc['Total Revenue'] if 'Total Revenue' in qtr_financials.index else pd.Series()
+            net_income = qtr_financials.loc['Net Income'] if 'Net Income' in qtr_financials.index else pd.Series()
+            capex = qtr_cashflow.loc['Capital Expenditure'] if 'Capital Expenditure' in qtr_cashflow.index else pd.Series()
+
+            if 'Free Cash Flow' in qtr_cashflow.index:
+                fcf = qtr_cashflow.loc['Free Cash Flow']
+            else:
+                fcf = (qtr_cashflow.loc['Operating Cash Flow'] + capex) if 'Operating Cash Flow' in qtr_cashflow.index else pd.Series()
+
+            fundamentals_df = pd.DataFrame({
+                'Revenue': revenue,
+                'Net Income': net_income,
+                'Free Cash Flow': fcf,
+                'CAPEX': capex.abs()
+            }).dropna(how='all').sort_index()
+
+            if not fundamentals_df.empty:
+                fig_fin = go.Figure()
+                # fin_colors: Revenue (Gold), Net Income (Green), FCF (Light Blue), CAPEX (Red)
+                fin_colors = ['#D4AF37', '#10B981', '#38BDF8', '#EF4444']
+                for i, col in enumerate(fundamentals_df.columns):
+                    fig_fin.add_trace(go.Bar(
+                        x=fundamentals_df.index, 
+                        y=fundamentals_df[col], 
+                        name=col,
+                        marker_color=fin_colors[i],
+                        opacity=0.9
+                    ))
+
+                fig_fin.update_layout(
+                    barmode='group', height=500, template="plotly_dark",
+                    plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+                    margin=dict(l=0, r=0, t=30, b=0),
+                    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                    font=dict(family="Inter", color="#94A3B8")
+                )
+                fig_fin.update_xaxes(showgrid=False)
+                fig_fin.update_yaxes(gridcolor='rgba(255,255,255,0.05)')
+                st.plotly_chart(fig_fin, use_container_width=True)
+            else:
+                st.warning("Insufficient quarterly financial data available for charts.")
+
+            with st.expander("Business Summary"):
+                st.write(info.get('longBusinessSummary', 'No summary available.'))
+
+
         # ==========================================
-        # TAB 2: MARKET SENTIMENT & SIGNALS
+        # TAB 2: ADVANCED ANALYTICS
         # ==========================================
         with tab2:
             st.markdown("<br>", unsafe_allow_html=True)
-            s1, s2 = st.columns([1, 2])
             
-            with s1:
-                st.markdown("### Signal Engine")
-                # RSI Calculation
-                delta = hist['Close'].diff()
-                gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
-                loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-                rs = gain / loss
-                rsi = 100 - (100 / (1 + rs)).iloc[-1]
-                
-                # Bollinger Bands
-                ma20 = hist['Close'].rolling(window=20).mean()
-                std20 = hist['Close'].rolling(window=20).std()
-                upper_bb = ma20 + (std20 * 2)
-                lower_bb = ma20 - (std20 * 2)
-                
-                curr_bb_upper = upper_bb.iloc[-1]
-                curr_bb_lower = lower_bb.iloc[-1]
-
-                signal = "NEUTRAL"
-                sig_color = "var(--text-muted)"
-                if rsi < 35 and current_price <= curr_bb_lower:
-                    signal = "BULLISH ENTRY"
-                    sig_color = "var(--positive)"
-                elif rsi > 65 and current_price >= curr_bb_upper:
-                    signal = "BEARISH EXIT"
-                    sig_color = "var(--negative)"
-
-                metric_card("Momentum (RSI)", f"{rsi:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                st.markdown("### Major Holders")
-                inst = ticker.institutional_holders
-                if inst is not None and not inst.empty:
-                    st.dataframe(inst[['Holder', 'Shares', '% Out']], hide_index=True)
-                else: st.info("Institutional data unavailable.")
-
-            with s2:
-                st.markdown("### Insider Transactions")
-                insiders = ticker.insider_transactions
-                if insiders is not None and not insiders.empty:
-                    st.dataframe(insiders[['Date', 'Insider', 'Transaction', 'Shares']].head(10), hide_index=True)
-                else: st.info("No recent insider transactions reported.")
-
-        # ==========================================
-        # TAB 3: QUANTITATIVE RESEARCH
-        # ==========================================
-        with tab3:
-            st.markdown("<br>", unsafe_allow_html=True)
+            # 1. OUTLIER DETECTION (Isolation Forest)
+            st.markdown("### Institutional Action Anomalies (Outlier Detection)")
+            st.write("Identifies statistically anomalous trading days based on combined price action and volume divergence.")
             
-            # Correlation Matrix
-            st.markdown("### Macro Asset Correlation (1Y)")
-            try:
-                corr_assets = [ticker_symbol, "SPY", "GLD", "USO", "^TNX"]
-                corr_data = yf.download(corr_assets, period="1y")['Close'].pct_change().corr()
-                fig_corr = px.imshow(corr_data, text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
-                fig_corr.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color="#94A3B8"))
-                st.plotly_chart(fig_corr, use_container_width=True)
-            except: st.warning("Correlation data currently unavailable.")
+            if len(hist) > 50:
+                df_outlier = hist.copy()
+                df_outlier['Returns'] = df_outlier['Close'].pct_change()
+                df_outlier['Vol_Change'] = df_outlier['Volume'].pct_change()
+                df_outlier.dropna(inplace=True)
+                
+                # Model
+                features = df_outlier[['Returns', 'Vol_Change']]
+                iso_forest = IsolationForest(contamination=0.03, random_state=42) # 3% of data flagged as anomalies
+                df_outlier['Anomaly'] = iso_forest.fit_predict(features)
+                anomalies = df_outlier[df_outlier['Anomaly'] == -1]
+
+                fig_anom = go.Figure()
+                fig_anom.add_trace(go.Scatter(x=df_outlier.index, y=df_outlier['Close'], mode='lines', name='Close Price', line=dict(color='#94A3B8', width=2)))
+                fig_anom.add_trace(go.Scatter(
+                    x=anomalies.index, y=anomalies['Close'], mode='markers', name='Anomalous Volume/Price Action',
+                    marker=dict(color='#D4AF37', size=10, line=dict(color='white', width=1), symbol='circle-open-dot')
+                ))
+                fig_anom.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', height=400,
+                    margin=dict(l=0, r=0, t=10, b=0), font=dict(family="Inter", color="#94A3B8"),
+                    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                )
+                fig_anom.update_xaxes(showgrid=False)
+                fig_anom.update_yaxes(showgrid=True, gridcolor='rgba(255,255,255,0.05)')
+                st.plotly_chart(fig_anom, use_container_width=True)
+            else:
+                st.warning("Not enough data points for Outlier Detection.")
 
             st.markdown("---")
-            
-            # Original Outlier Detection
-            if len(hist) > 50:
-                df_out = hist.copy()
-                df_out['Returns'] = df_out['Close'].pct_change()
-                df_out['Vol_Change'] = df_out['Volume'].pct_change()
-                df_out.dropna(inplace=True)
-                iso = IsolationForest(contamination=0.03, random_state=42).fit_predict(df_out[['Returns', 'Vol_Change']])
-                df_out['Anomaly'] = iso
-                anoms = df_out[df_out['Anomaly'] == -1]
-                
-                fig_anom = go.Figure()
-                fig_anom.add_trace(go.Scatter(x=df_out.index, y=df_out['Close'], mode='lines', line=dict(color='#94A3B8')))
-                fig_anom.add_trace(go.Scatter(x=anoms.index, y=anoms['Close'], mode='markers', marker=dict(color='#D4AF37', size=8)))
-                fig_anom.update_layout(title="Institutional Action Anomalies", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', height=400)
-                st.plotly_chart(fig_anom, use_container_width=True)
 
-            # Original Bayesian Target
-            st.markdown("### Bayesian Target Probability")
-            if info.get('targetMeanPrice'):
-                log_r = np.log(hist['Close']/hist['Close'].shift(1)).dropna()
-                vol = log_r.std() * np.sqrt(252)
-                drift = (log_r.mean() - 0.5 * vol**2) * 252
-                dist = (np.log(info['targetMeanPrice']/current_price) - drift) / vol
-                prob = (1 - norm.cdf(dist)) * 100
-                metric_card("12M Success Probability", f"{prob:.1f}%", f"Target: ${info['targetMeanPrice']}", "warning")
+            # 2. BAYESIAN TARGET PROBABILITY MODELING
+            st.markdown("### Bayesian Target Probability Modeling")
+            target_price = info.get('targetMeanPrice', None)
+            
+            if target_price and current_price and len(hist) > 0:
+                st.write(f"Calculating the statistical probability of reaching the mean target of **${target_price}** within 12 months, based on historical drift and volatility.")
+                
+                # Calculate daily log returns
+                log_returns = np.log(hist['Close'] / hist['Close'].shift(1)).dropna()
+                mu = log_returns.mean()
+                sigma = log_returns.std()
+                
+                # Annualize (assuming 252 trading days)
+                trading_days = 252
+                drift = (mu - 0.5 * sigma**2) * trading_days
+                volatility = sigma * np.sqrt(trading_days)
+                
+                # Probability calculation (Distance to target in standard deviations)
+                # P(S_T > Target) = 1 - CDF((ln(Target/Current) - Drift) / Volatility)
+                distance = (np.log(target_price / current_price) - drift) / volatility
+                prob_hit_target = (1 - norm.cdf(distance)) * 100
+
+                col_prob1, col_prob2 = st.columns(2)
+                with col_prob1:
+                    metric_card("Analyst Mean Target", f"${target_price}", f"Current: ${current_price:,.2f}", "warning")
+                with col_prob2:
+                    metric_card("12-Month Probability", f"{prob_hit_target:.1f}%", f"Historical Volatility: {volatility*100:.1f}%", "normal" if prob_hit_target > 50 else "inverse")
+            else:
+                st.info("Target price or historical data unavailable for this ticker.")
+
+            st.markdown("---")
+
+            # 3. RELATIVE STRENGTH (ALPHA)
+            st.markdown("### Relative Strength vs. S&P 500 (Alpha Generation)")
+            st.write("Compares the normalized cumulative return of the selected asset against the broad market benchmark (SPY).")
+            
+            try:
+                spy = yf.Ticker("SPY").history(period=period)
+                if not spy.empty and not hist.empty:
+                    # Align dates and normalize to base 100
+                    common_index = hist.index.intersection(spy.index)
+                    asset_returns = hist.loc[common_index, 'Close'] / hist.loc[common_index, 'Close'].iloc[0] * 100
+                    spy_returns = spy.loc[common_index, 'Close'] / spy.loc[common_index, 'Close'].iloc[0] * 100
+                    
+                    alpha_final = asset_returns.iloc[-1] - spy_returns.iloc[-1]
+
+                    fig_rs = go.Figure()
+                    fig_rs.add_trace(go.Scatter(x=common_index, y=asset_returns, mode='lines', name=ticker_symbol, line=dict(color='#D4AF37', width=2)))
+                    fig_rs.add_trace(go.Scatter(x=common_index, y=spy_returns, mode='lines', name='SPY (Benchmark)', line=dict(color='#475569', width=2, dash='dot')))
+                    
+                    fig_rs.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', height=400,
+                        margin=dict(l=0, r=0, t=10, b=0), font=dict(family="Inter", color="#94A3B8"),
+                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                        title=f"Cumulative Alpha: {alpha_final:+.2f}%"
+                    )
+                    fig_rs.update_xaxes(showgrid=False)
+                    fig_rs.update_yaxes(showgrid=True, gridcolor='rgba(255,255,255,0.05)')
+                    st.plotly_chart(fig_rs, use_container_width=True)
+            except Exception as e:
+                st.warning("Could not load benchmark data for relative strength comparison.")
 
     except Exception as e:
-        st.error(f"Analysis Interrupted: {e}")
+        st.error(f"System Error: {e}")
+        st.info("Ensure the ticker symbol is valid.")
