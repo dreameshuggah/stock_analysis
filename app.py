@@ -218,8 +218,8 @@ if ticker_symbol:
             
         with col_header_3:
             rsi_val, signal, sig_color = calculate_rsi_signal(hist, current_price)
-            #metric_card("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
-            st.metric("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
+            metric_card("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
+            #st.metric("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
             
 
         st.markdown("<br>", unsafe_allow_html=True)
