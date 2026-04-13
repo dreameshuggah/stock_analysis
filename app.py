@@ -149,25 +149,6 @@ st.markdown("""
         font-weight: 300;
         letter-spacing: 0.5px;
     }
-
-    /* Glassmorphism for Charts and Tables */
-div[data-testid="stPlotlyChart"], div[data-testid="stDataFrame"] {
-    background: rgba(30, 32, 38, 0.4) !important;
-    border-radius: 12px !important;
-    padding: 20px 0px !important; /* Minimized horizontal padding for maximum width */
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-    margin-bottom: 2rem !important;
-    width: 100% !important;
-    }
-
-    [data-testid="stPlotlyChart"]:hover {
-        border-color: rgba(212, 175, 55, 0.4) !important;
-        box-shadow: 0 16px 60px 0 rgba(0, 0, 0, 0.6) !important;
-        transform: translateY(-4px);
-    }
 </style>
 """, unsafe_allow_html=True)
 
