@@ -175,7 +175,7 @@ if ticker_symbol:
         qtr_financials_transposed = qtr_financials.transpose()
         
         # Header Section
-        col_header_1, col_header_2, col_header_3 = st.columns([3, 1])
+        col_header_1, col_header_2 = st.columns([2, 1])
         with col_header_1:
             st.title(f"{info.get('shortName', ticker_symbol)}")
             st.caption(f"{info.get('sector', 'N/A')} | {info.get('industry', 'N/A')} | {info.get('exchange', 'N/A')}")
@@ -215,14 +215,6 @@ if ticker_symbol:
             """, unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
         
-        with col_header_3:
-            st.markdown("### Signal Engine")
-            """
-            # RSI Calculation
-            rsi, signal, sig_color = rsi(hist)
-            metric_card("Momentum (RSI)", f"{rsi:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
-            st.markdown("<br>", unsafe_allow_html=True)
-            """
         st.markdown("<br>", unsafe_allow_html=True)
         
         # Calculations for Additional Metrics
