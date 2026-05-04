@@ -226,7 +226,7 @@ if ticker_symbol:
             ema20 = hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1]
             ema50 = hist['Close'].ewm(span=50, adjust=False).mean().iloc[-1]
             crossover_3_ema = "Yes" if (ema10 > ema20) and (ema20 > ema50) else "No"
-            metric_card("3 EMA Crossovers", crossover_3_ema, "10EMA > 20EMA > 50EMA", "normal" if crossover_3_ema == "Yes" else "inverse")
+            metric_card("EMA Crossovers", crossover_3_ema, "10EMA > 20EMA > 50EMA", "normal" if crossover_3_ema == "Yes" else "inverse")
             
 
         st.markdown("<br>", unsafe_allow_html=True)
