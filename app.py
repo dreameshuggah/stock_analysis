@@ -182,7 +182,7 @@ if ticker_symbol:
         color = "#00FF41" if change >= 0 else "#FF3131"
         arrow = "▲" if change >= 0 else "▼"
 
-        col_header_1, col_header_2, col_header_3 = st.columns([3, 1.5, 1.5])
+        col_header_1, col_header_2, col_header_3, col_header_4 = st.columns([3, 1.5, 1.5, 1.5])
         
         with col_header_1:
             st.title(f"{info.get('shortName', ticker_symbol)}")
@@ -220,6 +220,13 @@ if ticker_symbol:
             rsi_val, signal, sig_color = calculate_rsi_signal(hist, current_price)
             metric_card("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
             #st.metric("Momentum (RSI)", f"{rsi_val:.1f}", f"Signal: {signal}", "normal" if signal == "BULLISH ENTRY" else "inverse" if signal == "BEARISH EXIT" else "warning")
+            
+        with col_header_4:
+            ema10 = hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1]
+            ema20 = hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1]
+            ema50 = hist['Close'].ewm(span=50, adjust=False).mean().iloc[-1]
+            crossover_3_ema = "Yes" if (ema10 > ema20) and (ema20 > ema50) else "No"
+            metric_card("3 EMA Crossovers", crossover_3_ema, "10EMA > 20EMA > 50EMA", "normal" if crossover_3_ema == "Yes" else "inverse")
             
 
         st.markdown("<br>", unsafe_allow_html=True)
