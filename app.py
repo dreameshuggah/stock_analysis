@@ -259,9 +259,21 @@ if ticker_symbol:
         quick_ratio = info.get('quickRatio', 'N/A')
         
         # 4. Debt & Market
+        fin_curr_to_usd = {'EUR':1.15,
+                           'TWD':0.031,
+                           'DKK':0.15,
+                           'CAD':0.72,
+                           'MXN': 0.059,
+                           'KRW': 0.00071
+                          }
         market_cap = info.get('marketCap', 1)
         total_debt = info.get('totalDebt', 0)
-        debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
+        
+        fin_currency = info.get('financialCurrency')
+        total_debt_usd = convert_to_usd(total_debt, fin_currency)
+
+        debt_to_mcap = (total_debt_usd / market_cap) if total_debt_usd and market_cap else None
+        #debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
 
         # ---- TABS INTERFACE ----
         tab1, tab2 = st.tabs(["Overview & Fundamentals", "Advanced Analytics"])
