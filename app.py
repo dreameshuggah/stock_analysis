@@ -268,8 +268,17 @@ if ticker_symbol:
                           }
         market_cap = info.get('marketCap', 1)
         total_debt = info.get('totalDebt', 0)
-        
         fin_currency = info.get('financialCurrency')
+
+        def convert_to_usd(amount, currency):
+            if currency == 'USD':
+                    return amount
+            elif currency in fin_curr_to_usd:
+                return amount * fin_curr_to_usd[currency]
+            else:
+                print(f"Warning: Conversion rate for {currency} not available. Returning original amount.")
+                return amount
+                
         total_debt_usd = convert_to_usd(total_debt, fin_currency)
 
         debt_to_mcap = (total_debt_usd / market_cap) if total_debt_usd and market_cap else None
