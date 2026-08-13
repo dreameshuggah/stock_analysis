@@ -281,7 +281,7 @@ if ticker_symbol:
                 
         total_debt_usd = convert_to_usd(total_debt, fin_currency)
 
-        debt_to_mcap = (total_debt_usd / market_cap) if total_debt_usd and market_cap else None
+        debt_to_mcap = (total_debt_usd / market_cap) * 100 if market_cap else 0
         #debt_to_mcap = (total_debt / market_cap) * 100 if market_cap else 0
 
         # ---- TABS INTERFACE ----
