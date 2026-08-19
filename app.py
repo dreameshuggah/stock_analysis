@@ -317,8 +317,8 @@ if ticker_symbol:
             with r1: metric_card("Return on Equity", roe_val)
             with r2: metric_card("EBITDA Margin", ebitda_margin_val)
             with r3: metric_card("Quick Ratio", f"{quick_ratio}")
-            with r4: metric_card("Short Ratio", f"{info.get('shortRatio', 'N/A')}")
-            #with r4: metric_card("Beta", f"{info.get('beta', 'N/A')}")
+            #with r4: metric_card("Short Ratio", f"{info.get('shortRatio', 'N/A')}")
+            with r4: metric_card("Beta", f"{info.get('beta', 'N/A')}")
 
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown(f"### Technical Analysis")
